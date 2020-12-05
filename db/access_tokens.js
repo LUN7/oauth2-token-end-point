@@ -1,30 +1,48 @@
-'use strict';
+"use strict";
 
-const tokens = {};
+// const tokens = {};
+const Token = require("../model/token");
 
-module.exports.find = (key, done) => {
-  if (tokens[key]) return done(null, tokens[key]);
-  return done(new Error('Token Not Found'));
+module.exports.find = (accessToken, done) => {
+  Token.findOne({ accessToken }, (err, token) => {
+    if (err) return done(new Error(err));
+    if (!token) return done(new Error("Token Not Found"));
+    return done(null, token);
+  });
 };
 
 module.exports.findByUserIdAndClientId = (userId, clientId, done) => {
-  for (const token in tokens) {
-    if (tokens[token].userId === userId && tokens[token].clientId === clientId) return done(null, token);
-  }
-  return done(new Error('Token Not Found'));
+  Token.findOne({ userId, clientId }, (err, token) => {
+    if (err) return done(new Error(err));
+    if (!token) return done(new Error("Token Not Found"));
+    return done(null, token);
+  });
 };
 
-module.exports.save = (token, userId, clientId, done) => {
-  tokens[token] = { userId, clientId };
-  done();
+module.exports.save = (accessToken, userId, clientId, done) => {
+  Token.findOne({ userId, clientId }, (err, token) => {
+    if (err) return done(new Error(err));
+    if (!token)
+      return Token.create({ userId, clientId, accessToken }, (err, dump) => {
+        if (err) return done(new Error("Access Token Create Failed"));
+        return done(null);
+      });
+    token.accessToken = accessToken;
+    return token.save((err, dump) => {
+      if (err) return done(new Error("Access Token Update Failed"));
+      return done(null);
+    });
+  });
 };
 
 module.exports.removeByUserIdAndClientId = (userId, clientId, done) => {
-  for (const token in tokens) {
-      if (tokens[token].userId === userId && tokens[token].clientId === clientId) {
-          delete tokens[token];
-          return done(null);
-      }
-  }
-  return done(new Error('Token Not Found'));
+  Token.findOne({ userId, clientId }, (err, token) => {
+    if (err) return done(new Error(err));
+    if (!token) return done(new Error("Token Not Found"));
+    token.accessToken = ""
+    return token.save((err, dump) => {
+      if (err) return done(new Error("Refresh Token Removal Failed"));
+      return done(null);
+    });
+  });
 };
