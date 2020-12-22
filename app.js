@@ -5,7 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
-const session = require('cookie-session');
+// const session = require('cookie-session');
 const passport = require('passport');
 const routes = require('./routes');
 const mongoose = require('mongoose')
@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(bodyParser.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler());
-app.use(session({ secret: 'no secret', name: 'oAuth'}));
+// app.use(session({ secret: 'no secret', name: 'oAuth'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req,res,next)=>{
@@ -48,7 +48,7 @@ function connectMongoDB() {
       .on('error', console.log)
       .on('disconnected', connectMongoDB)
       .once('open', listen);
-    return mongoose.connect('mongodb://localhost:27017/mydb', {
+    return mongoose.connect('mongodb://localhost:27017/ecom', {
       keepAlive: 1,
       useNewUrlParser: true,
       useUnifiedTopology: true

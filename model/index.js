@@ -3,5 +3,6 @@ const user = require('./user')
 
 module.exports = {
     token,
-    user
+    user,
+    client
 }
