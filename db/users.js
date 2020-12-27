@@ -19,5 +19,25 @@ module.exports.findByUsername = (username, done) => {
 };
 
 module.exports.create = (user, done) => {
+  User.create(user, (err, user)=> {
+    if (err) return done(new Error(err))
+    if (!user) return done(new Error('User save failed'))
+    return done(null, user)
+  })
+};
 
-}
+module.exports.deleteById = (id, done) => {
+  User.findByIdAndRemove(id, (err, user)=> {
+    if (err) return done(new Error(err))
+    if (!user) return done(new Error('User Not Found'))
+    return done(null, user)
+  })
+};
+
+module.exports.deleteByUsername = (username, done) => {
+  User.findByIdAndRemove(id, (err, user)=> {
+    if (err) return done(new Error(err))
+    if (!user) return done(new Error('User Not Found'))
+    return done(null, user)
+  })
+};

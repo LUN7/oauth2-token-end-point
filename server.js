@@ -9,7 +9,7 @@ const errorHandler = require('errorhandler');
 const passport = require('passport');
 const routes = require('./routes');
 const mongoose = require('mongoose')
-
+const flash = require('connect-flash');
 
 // Express configuration
 const app = express();
@@ -17,20 +17,19 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(flash());
 app.use(errorHandler());
 // app.use(session({ secret: 'no secret', name: 'oAuth'}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use((req,res,next)=>{
-  console.log(req.session)
-  next()
-})
 
 // Passport configuration
 require('./auth');
 
-app.post('/oauth/token', routes.oauth2.token);
-app.get('/api/userinfo', routes.user.info);
+app.post('/auth/token', routes.oauth2.token);
+app.post('/auth/me', routes.user.me);
+app.delete('/auth/client', routes.client.delete)
+app.post('/auth/client', routes.client.modify) 
 
 function listen() {
     const port = process.env.PORT || 3000

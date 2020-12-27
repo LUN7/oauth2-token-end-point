@@ -1,21 +1,16 @@
 {
-  "name": "oauth2orize-examples",
-  "version": "0.2.0",
-  "repository": "https://github.com/gerges-beshay/oauth2orize-examples.git",
-  "license": "MIT",
-  "contributors": [
-    {
-      "name": "PoziWorld",
-      "url": "https://github.com/PoziWorld"
-    }
-  ],
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "@poziworld/oauth2orize": "^1.11.1",
     "body-parser": "^1.17.1",
     "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^1.4.0",
     "errorhandler": "^1.5.0",
@@ -30,9 +25,15 @@
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2"
   },
-  "devDependencies": {
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb-base": "^11.1.3",
-    "eslint-plugin-import": "^2.2.0"
-  }
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LUN7/oauth2-token-end-point.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LUN7/oauth2-token-end-point/issues"
+  },
+  "homepage": "https://github.com/LUN7/oauth2-token-end-point#readme"
 }

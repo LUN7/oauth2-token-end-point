@@ -7,6 +7,14 @@
 
 const Client = require("../model/client");
 
+module.exports.create = (client, done) => {
+  Client.create(client, (err,client)=> {
+      if (err) return done(new Error(err))
+      if (!client) return done(new Error('Client Not Found'))
+      return done(null, client)
+  })
+} 
+
 module.exports.findById = (id, done) => {
   Client.findById(id, (err, client)=> {
     if (err) return done(new Error(err))

@@ -7,6 +7,8 @@ const ClientPasswordStrategy = require('passport-oauth2-client-password').Strate
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const db = require('../db');
 
+const KEEP_ALIVE = 30 * 60 * 1000
+
 /**
  * LocalStrategy
  *
@@ -67,15 +69,19 @@ passport.use(new BearerStrategy(
     db.accessTokens.find(accessToken, (error, token) => {
       if (error) return done(error);
       if (!token) return done(null, false);
+      if (!token.updatedAt) throw ('no timestamp found')
+      if ((token.updatedAt - Date.now()) > KEEP_ALIVE) return done('token expired')
       if (token.userId) {
         db.users.findById(token.userId, (error, user) => {
           if (error) return done(error);
           if (!user) return done(null, false);
-          // To keep this example simple, restricted scopes are not implemented,
-          // and this is just for illustrative purposes.
+          // Scope is always *
+          // As the oauth is for internal use only
           done(null, user, { scope: '*' });
         });
       } else {
+        // this has no real usage yet
+
         // The request came from a client only since userId is null,
         // therefore the client is passed back instead of a user.
         db.clients.findByClientId(token.clientId, (error, client) => {

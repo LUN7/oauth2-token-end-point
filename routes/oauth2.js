@@ -109,6 +109,36 @@ server.exchange(
 // exchange middleware will be invoked to handle the request. Clients must
 // authenticate when making requests to this endpoint.
 
+/**
+ * @api {post} /oauth/token get tokens
+ * @apiName ouathToken
+ * @apiGroup Auth
+ * 
+ * @apiParam {grant_type} grant_type "password" 
+ * @apiParam {String} username username 
+ * @apiParam {String} password password
+ * @apiParam {String} client_id client id
+ * @apiParam {String} client_secret client secret  
+ * 
+ * @apiSuccess {String} access_token access token
+ * @apiSuccess {String} refresh_token refresh token
+ * 
+ */
+
+/**
+ * @api {post} /oauth/token refresh tokens
+ * @apiName ouathRefreshToken
+ * @apiGroup Auth
+ * 
+ * @apiParam {grant_type} grant_type "refresh_token" 
+ * @apiParam  {String} refresh_token refresh token
+ * @apiParam {String} client_id client id
+ * @apiParam {String} client_secret client secret  
+ * 
+ * @apiSuccess {String} access_token access token
+ * @apiSuccess {String} refresh_token refresh token
+ * 
+ */
 module.exports.token = [
   passport.authenticate(["basic", "oauth2-client-password"], {
     session: false,

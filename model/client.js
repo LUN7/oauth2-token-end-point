@@ -6,6 +6,9 @@ const client = new Schema({
   clientId: { type: String, required: true },
   clientSecret: { type: String, required: true },
   isTrusted: {type: String, require: true, default: true}
+},
+{
+  timestamps: true
 });
 
 const tokenDB = mongoose 
