@@ -110,9 +110,9 @@ server.exchange(
 // authenticate when making requests to this endpoint.
 
 /**
- * @api {post} /oauth/token get tokens
+ * @api {post} /auth/token get tokens
  * @apiName ouathToken
- * @apiGroup Auth
+ * @apiGroup Token
  * 
  * @apiParam {grant_type} grant_type "password" 
  * @apiParam {String} username username 
@@ -126,9 +126,9 @@ server.exchange(
  */
 
 /**
- * @api {post} /oauth/token refresh tokens
+ * @api {post} /auth/token refresh tokens
  * @apiName ouathRefreshToken
- * @apiGroup Auth
+ * @apiGroup Token
  * 
  * @apiParam {grant_type} grant_type "refresh_token" 
  * @apiParam  {String} refresh_token refresh token

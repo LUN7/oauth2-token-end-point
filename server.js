@@ -28,8 +28,8 @@ require('./auth');
 
 app.post('/auth/token', routes.oauth2.token);
 app.post('/auth/me', routes.user.me);
-app.delete('/auth/client', routes.client.delete)
-app.post('/auth/client', routes.client.modify) 
+app.post('/auth/client/:clientId', routes.client.post) 
+app.delete('/auth/client/:clientId', routes.client.delete)
 
 function listen() {
     const port = process.env.PORT || 3000
